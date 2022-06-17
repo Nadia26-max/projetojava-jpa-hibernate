@@ -10,7 +10,7 @@ import com.estudojava.workshop.entities.User;
 @RequestMapping(value = "/users")//Caminho
 public class UserResource {
 
-	//Método para acessar os usuarios (retornar respostas de requisição web)
+	//Método para acessar os usuarios (retornar respostas de requisição web - HTTP)
 	@GetMapping
 	public ResponseEntity<User> findAll(){//Vai retornar os usuarios
 		User u = new User(1L, "Mary", "90909090","12345");

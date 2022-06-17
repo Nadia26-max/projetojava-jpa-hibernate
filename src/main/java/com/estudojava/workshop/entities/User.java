@@ -2,11 +2,18 @@ package com.estudojava.workshop.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Id//Indica a PK
+	@GeneratedValue (strategy = GenerationType.IDENTITY)//Autoincremento da PK
 	private long id;
 	private String nome;
 	private String fone;
