@@ -1,13 +1,18 @@
 package com.estudojava.workshop.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_user")//O bd vai criar a tabela com este nome
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -19,6 +24,10 @@ public class User implements Serializable{
 	private String email;
 	private String fone;
 	private String senha;
+	
+	//Coleções só necessitam do get - Não haverá troca nenhuma de dados
+	@OneToMany(mappedBy = "client") //Está mapeado por client (nome dado à associação)
+	private List<OrderPedido> orders = new ArrayList<>();
 	
 	public User() {
 	}
@@ -70,6 +79,10 @@ public class User implements Serializable{
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public List<OrderPedido> getOrders() {
+		return orders;
 	}
 
 	//Comparação de dois objetos
