@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.estudojava.workshop.entities.Category;
 import com.estudojava.workshop.entities.OrderPedido;
+import com.estudojava.workshop.entities.Product;
 import com.estudojava.workshop.entities.User;
 import com.estudojava.workshop.entities.enums.OrderStatus;
 import com.estudojava.workshop.repositories.CategoryRepository;
 import com.estudojava.workshop.repositories.OrderRepository;
+import com.estudojava.workshop.repositories.ProductRepository;
 import com.estudojava.workshop.repositories.UserRepository;
 
 @Configuration // Classe auxiliar, de configuração
@@ -29,6 +31,9 @@ public class TestConfig implements CommandLineRunner {// Executando quando progr
 	
 	@Autowired
 	private  CategoryRepository categoryRep;
+	
+	@Autowired
+	private ProductRepository productRep;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -37,6 +42,12 @@ public class TestConfig implements CommandLineRunner {// Executando quando progr
 		Category cat1 = new Category(1L, "Eletronicos");
 		Category cat2 = new Category(2L, "Livros");
 		Category cat3 = new Category(3L, "Computadores"); 	
+		
+		Product p1 = new Product(1L, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
+		Product p2 = new Product(2L, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
+		Product p3 = new Product(3L, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
+		Product p4 = new Product(4L, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
+		Product p5 = new Product(5L, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 		
 		User u1 = new User(1L,"Maria Brown", "maria@gmail.com", "988888888", "123456");
 		User u2 = new User(2L,"Alex Green", "alex@gmail.com", "977977977", "123456"); 
@@ -49,5 +60,6 @@ public class TestConfig implements CommandLineRunner {// Executando quando progr
 		userRep.saveAll(Arrays.asList(u1,u2));
 		orderRep.saveAll(Arrays.asList(op1,op2,op3));
 		categoryRep.saveAll(Arrays.asList(cat1,cat2,cat3));
+		productRep.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 	}
 }
