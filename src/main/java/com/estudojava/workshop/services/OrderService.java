@@ -5,23 +5,24 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.estudojava.workshop.entities.User;
-import com.estudojava.workshop.repositories.UserRepository;
+
+import com.estudojava.workshop.entities.OrderPedido;
+import com.estudojava.workshop.repositories.OrderRepository;
 
 @Service//Permite a injeção de dependência (Classe de Serviço, então é indicado usar o service
-public class UserService {
+public class OrderService {
 
 	@Autowired(required = true)
-	private UserRepository rep;
+	private OrderRepository rep;
 	
 	//Métdo para retornar todos os dados do BD
-	public List<User> findAll(){
+	public List<OrderPedido> findAll(){
 		return rep.findAll();
 	}
 	
 	//Buscando usuário por Id
-	public User findById(Long id) {
-		Optional<User> obj = rep.findById(id);
+	public OrderPedido findById(Long id) {
+		Optional<OrderPedido> obj = rep.findById(id);
 		return obj.get();//Retorna o objetivo que estiver no Optional
 	}
 }

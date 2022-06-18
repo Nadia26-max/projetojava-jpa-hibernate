@@ -4,12 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_user")//O bd vai criar a tabela com este nome
@@ -26,8 +31,9 @@ public class User implements Serializable{
 	private String senha;
 	
 	//Coleções só necessitam do get - Não haverá troca nenhuma de dados
-	@OneToMany(mappedBy = "client") //Está mapeado por client (nome dado à associação)
-	private List<OrderPedido> orders = new ArrayList<>();
+	@JsonIgnore
+	@OneToMany(fetch=FetchType.EAGER /*mappedBy = "client"*/) //Está mapeado por client (nome dado à associação)
+	private List<OrderPedido> orderpedido = new ArrayList<>();
 	
 	public User() {
 	}
@@ -82,7 +88,7 @@ public class User implements Serializable{
 	}
 	
 	public List<OrderPedido> getOrders() {
-		return orders;
+		return orderpedido;
 	}
 
 	//Comparação de dois objetos

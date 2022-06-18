@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "tb_order")//O bd vai criar a tabela com este nome
@@ -20,10 +21,13 @@ public class OrderPedido implements Serializable{
 	@Id//Indica a PK
 	@GeneratedValue (strategy = GenerationType.IDENTITY)//Autoincremento da PK
 	private Long id;
+	
+	//Formatando o json
+	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone = "GMT")
 	private Instant momento;
 	
 	@ManyToOne//Muitos pedidos para um usuario (relacionamento) -- Referencia a FK
-	@JoinColumn(name = "client_id")//Nome da FK
+	@JoinColumn(name = "cliente_id")//Nome da FK
 	private User client;
 	
 	public OrderPedido() {	
