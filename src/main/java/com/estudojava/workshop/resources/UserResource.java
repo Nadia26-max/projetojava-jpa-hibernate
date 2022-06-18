@@ -13,7 +13,7 @@ public class UserResource {
 	//Método para acessar os usuarios (retornar respostas de requisição web - HTTP)
 	@GetMapping
 	public ResponseEntity<User> findAll(){//Vai retornar os usuarios
-		User u = new User(1L, "Mary", "90909090","12345");
+		User u = new User(1L, "Mary", "mary@gmail.coom","90909090","12345");
 		return ResponseEntity.ok().body(u);//Retornar com o sucesso no corpo da resposta o usuario u que foi instanciado
 	}
 }

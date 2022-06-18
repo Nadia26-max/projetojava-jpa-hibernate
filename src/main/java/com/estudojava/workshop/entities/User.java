@@ -16,16 +16,18 @@ public class User implements Serializable{
 	@GeneratedValue (strategy = GenerationType.IDENTITY)//Autoincremento da PK
 	private long id;
 	private String nome;
+	private String email;
 	private String fone;
 	private String senha;
 	
 	public User() {
 	}
 
-	public User(long id, String nome, String fone, String senha) {
+	public User(long id, String nome, String email,String fone, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.email = email;
 		this.fone = fone;
 		this.senha = senha;
 	}
@@ -44,6 +46,14 @@ public class User implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getFone() {
