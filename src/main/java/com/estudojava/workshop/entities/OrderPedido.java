@@ -3,6 +3,7 @@ package com.estudojava.workshop.entities;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.estudojava.workshop.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -26,6 +29,8 @@ public class OrderPedido implements Serializable{
 	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone = "GMT")
 	private Instant momento;
 	
+	private Integer status;
+	
 	@ManyToOne//Muitos pedidos para um usuario (relacionamento) -- Referencia a FK
 	@JoinColumn(name = "cliente_id")//Nome da FK
 	private User client;
@@ -33,10 +38,11 @@ public class OrderPedido implements Serializable{
 	public OrderPedido() {	
 	}
 
-	public OrderPedido(Long id, Instant momento, User client) {
+	public OrderPedido(Long id, Instant momento, OrderStatus status, User client) {
 		super();
 		this.id = id;
 		this.momento = momento;
+		setOrderStatus(status);
 		this.client = client;
 	}
 
@@ -54,6 +60,16 @@ public class OrderPedido implements Serializable{
 
 	public void setMomento(Instant momento) {
 		this.momento = momento;
+	}
+	
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.valueOf(status);//Pega o numero inteiro da classe e convertendo para OrderStatus
+	}
+
+	public void setOrderStatus(OrderStatus status) {
+		if(status != null) {
+		this.status = status.getCodigo();
+		}
 	}
 
 	public User getClient() {
