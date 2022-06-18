@@ -2,13 +2,17 @@ package com.estudojava.workshop.config;
 
 import java.time.Instant;
 import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+
+import com.estudojava.workshop.entities.Category;
 import com.estudojava.workshop.entities.OrderPedido;
 import com.estudojava.workshop.entities.User;
 import com.estudojava.workshop.entities.enums.OrderStatus;
+import com.estudojava.workshop.repositories.CategoryRepository;
 import com.estudojava.workshop.repositories.OrderRepository;
 import com.estudojava.workshop.repositories.UserRepository;
 
@@ -22,10 +26,17 @@ public class TestConfig implements CommandLineRunner {// Executando quando progr
 	
 	@Autowired
 	private OrderRepository orderRep;
+	
+	@Autowired
+	private  CategoryRepository categoryRep;
 
 	@Override
 	public void run(String... args) throws Exception {
 		// Populando o bd
+		
+		Category cat1 = new Category(1L, "Eletronicos");
+		Category cat2 = new Category(2L, "Livros");
+		Category cat3 = new Category(3L, "Computadores"); 	
 		
 		User u1 = new User(1L,"Maria Brown", "maria@gmail.com", "988888888", "123456");
 		User u2 = new User(2L,"Alex Green", "alex@gmail.com", "977977977", "123456"); 
@@ -37,5 +48,6 @@ public class TestConfig implements CommandLineRunner {// Executando quando progr
 		//Salvando os dados -- instanciando o bd
 		userRep.saveAll(Arrays.asList(u1,u2));
 		orderRep.saveAll(Arrays.asList(op1,op2,op3));
+		categoryRep.saveAll(Arrays.asList(cat1,cat2,cat3));
 	}
 }
