@@ -5,14 +5,21 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Proxy;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_category")
+@Proxy(lazy = false)
 public class Category implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -22,7 +29,9 @@ public class Category implements Serializable{
 	private long id;
 	private String nome;
 	
-	@Transient
+	@JsonIgnore
+	@ManyToMany(mappedBy = "categories",fetch = FetchType.LAZY)
+	@BatchSize(size = 1000)
 	private Set<Product> products = new HashSet<>();
 	
 	public Category() {

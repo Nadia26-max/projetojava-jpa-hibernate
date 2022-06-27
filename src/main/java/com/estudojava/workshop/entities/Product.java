@@ -5,14 +5,20 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import org.hibernate.annotations.Proxy;
 
 @Entity
 @Table(name = "tb_product")
+@Proxy(lazy = false)
 public class Product implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -27,7 +33,14 @@ public class Product implements Serializable{
 	
 	//Conjunto - Garante que o mesmo produto nao terá categoria mais de uma vez
 	//Coleção nao entra no construtor pois ja está instanciada aqui
-	@Transient
+	//Mapeamento para transformar essas coleções que têm nas duas classes, na tabela de associação que tem no modelo relacional
+	
+	@ManyToMany(fetch = FetchType.EAGER)//Quais tabelas e quais chaves estrangeiras vao associar produto e categoria							 
+	@JoinTable(name = "tb_product_category", 
+			//FK referente à tabela product
+	joinColumns = @JoinColumn(name = "product_id"),
+			//Define a FK da outra entidade (tabela category)
+	inverseJoinColumns = @JoinColumn(name = "category_id"))//FK da outra entidade (categoria)
 	private Set<Category> categories = new HashSet<>();//Tem que começar vazia(nao nula), porem instanciada
 	
 	public Product(){
