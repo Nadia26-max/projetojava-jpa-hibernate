@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,5 +45,13 @@ public class UserResource {
 		//Configurando a resposta 201 no Postman
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
+	}
+	
+	//Para excluir
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> exclui(@PathVariable Long id){//Para ser reconhecida como variavel na url
+		serv.delete(id);
+		//Retornando a resposta 204
+		return ResponseEntity.noContent().build();//retorna algo vazio - noContent
 	}
 }

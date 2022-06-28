@@ -29,4 +29,8 @@ public class UserService {
 	public User insert(User obj) {
 		return rep.save(obj);
 	}
+	
+	public void delete(Long id) {
+		rep.deleteById(id);
+	}
 }
