@@ -24,4 +24,9 @@ public class UserService {
 		Optional<User> obj = rep.findById(id);
 		return obj.get();//Retorna o objetivo que estiver no Optional
 	}
+	
+	//Retorna usuário salvo
+	public User insert(User obj) {
+		return rep.save(obj);
+	}
 }
