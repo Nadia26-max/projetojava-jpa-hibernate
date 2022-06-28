@@ -110,7 +110,7 @@ public class OrderPedido implements Serializable{
 	public Double getTotal() {
 		double soma = 0.0;
 		for(OrderItem x: itens) {
-			soma =+ x.getSubtotal();//ou soma = soma +
+			soma = soma + x.getSubtotal();//ou soma = soma +
 		}
 		return soma;
 	}
