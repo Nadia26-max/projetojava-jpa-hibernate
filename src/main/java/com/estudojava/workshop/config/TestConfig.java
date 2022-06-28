@@ -37,7 +37,7 @@ public class TestConfig implements CommandLineRunner {// Executando quando progr
 	
 	@Autowired
 	private OrderItemRepository orderItemRep;
-
+	
 	@Override
 	public void run(String... args) throws Exception {
 		// Populando o bd
