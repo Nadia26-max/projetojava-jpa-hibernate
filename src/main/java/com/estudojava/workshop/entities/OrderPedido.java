@@ -2,16 +2,18 @@ package com.estudojava.workshop.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
-
+import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.estudojava.workshop.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -31,9 +33,13 @@ public class OrderPedido implements Serializable{
 	
 	private Integer status;
 	
-	@ManyToOne//Muitos pedidos para um usuario (relacionamento) -- Referencia a FK
+	@ManyToOne(fetch = FetchType.EAGER)//Muitos pedidos para um usuario (relacionamento) -- Referencia a FK
 	@JoinColumn(name = "cliente_id")//Nome da FK
 	private User client;
+	
+	//Retorna a ordem de itens (tabela) associados ao pedido
+	@OneToMany(mappedBy = "id.order",fetch = FetchType.EAGER)
+	private Set<OrderItem> itens = new HashSet<>();//Deixar desta forma quando for uma coleção
 	
 	public OrderPedido() {	
 	}
@@ -78,6 +84,11 @@ public class OrderPedido implements Serializable{
 
 	public void setClient(User client) {
 		this.client = client;
+	}
+	
+	//Get para o Set<OrderItem>
+	public Set<OrderItem> getItens(){
+		return itens;
 	}
 
 	@Override

@@ -2,18 +2,18 @@ package com.estudojava.workshop.config;
 
 import java.time.Instant;
 import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-
 import com.estudojava.workshop.entities.Category;
+import com.estudojava.workshop.entities.OrderItem;
 import com.estudojava.workshop.entities.OrderPedido;
 import com.estudojava.workshop.entities.Product;
 import com.estudojava.workshop.entities.User;
 import com.estudojava.workshop.entities.enums.OrderStatus;
 import com.estudojava.workshop.repositories.CategoryRepository;
+import com.estudojava.workshop.repositories.OrderItemRepository;
 import com.estudojava.workshop.repositories.OrderRepository;
 import com.estudojava.workshop.repositories.ProductRepository;
 import com.estudojava.workshop.repositories.UserRepository;
@@ -34,6 +34,9 @@ public class TestConfig implements CommandLineRunner {// Executando quando progr
 	
 	@Autowired
 	private ProductRepository productRep;
+	
+	@Autowired
+	private OrderItemRepository orderItemRep;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -74,5 +77,11 @@ public class TestConfig implements CommandLineRunner {// Executando quando progr
 		userRep.saveAll(Arrays.asList(u1,u2));
 		orderRep.saveAll(Arrays.asList(op1,op2,op3));
 		
+		OrderItem oi1 = new OrderItem(op1, p1, 2, p1.getPreco());
+		OrderItem oi2 = new OrderItem(op1, p3, 1, p3.getPreco());
+		OrderItem oi3 = new OrderItem(op2, p3, 2, p3.getPreco());
+		OrderItem oi4 = new OrderItem(op3, p5, 2, p5.getPreco()); 
+		
+		orderItemRep.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 	}
 }

@@ -3,6 +3,7 @@ package com.estudojava.workshop.entities.pk;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -16,11 +17,11 @@ public class OrderItemPK implements Serializable{
 
 	//Esta classe terá uma referência para o produto e uma referência para o pedido
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "order_id")
 	private OrderPedido order;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id")
 	private Product product;
 	
