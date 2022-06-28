@@ -12,9 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_product")
@@ -42,6 +45,10 @@ public class Product implements Serializable{
 			//Define a FK da outra entidade (tabela category)
 	inverseJoinColumns = @JoinColumn(name = "category_id"))//FK da outra entidade (categoria)
 	private Set<Category> categories = new HashSet<>();//Tem que começar vazia(nao nula), porem instanciada
+	
+	//Set nao admite repetições
+	@OneToMany(mappedBy = "id.product",fetch = FetchType.EAGER)
+	private Set<OrderItem> itens = new HashSet<>();
 	
 	public Product(){
 	}
@@ -97,6 +104,16 @@ public class Product implements Serializable{
 
 	public Set<Category> getCategories() {
 		return categories;
+	}
+	
+	@JsonIgnore //Ignora o loop
+	public Set<OrderPedido> getOrders(){
+		Set<OrderPedido> set = new HashSet<>();
+		
+		for(OrderItem x: itens) {
+			set.add(x.getOrder());
+		}
+		return set;
 	}
 
 	@Override
