@@ -5,6 +5,8 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.estudojava.workshop.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -40,6 +43,9 @@ public class OrderPedido implements Serializable{
 	//Retorna a ordem de itens (tabela) associados ao pedido
 	@OneToMany(mappedBy = "id.order",fetch = FetchType.EAGER)
 	private Set<OrderItem> itens = new HashSet<>();//Deixar desta forma quando for uma coleção
+	
+	@OneToOne(mappedBy = "order",cascade = CascadeType.ALL)//Mapeando as duas entidades para ter o mesmo id
+	private  Payment payment;
 	
 	public OrderPedido() {	
 	}
@@ -86,9 +92,27 @@ public class OrderPedido implements Serializable{
 		this.client = client;
 	}
 	
+	//Pagamento
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
 	//Get para o Set<OrderItem>
 	public Set<OrderItem> getItens(){
 		return itens;
+	}
+	
+	//Implementando total
+	public Double getTotal() {
+		double soma = 0.0;
+		for(OrderItem x: itens) {
+			soma =+ x.getSubtotal();//ou soma = soma +
+		}
+		return soma;
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Profile;
 import com.estudojava.workshop.entities.Category;
 import com.estudojava.workshop.entities.OrderItem;
 import com.estudojava.workshop.entities.OrderPedido;
+import com.estudojava.workshop.entities.Payment;
 import com.estudojava.workshop.entities.Product;
 import com.estudojava.workshop.entities.User;
 import com.estudojava.workshop.entities.enums.OrderStatus;
@@ -83,5 +84,12 @@ public class TestConfig implements CommandLineRunner {// Executando quando progr
 		OrderItem oi4 = new OrderItem(op3, p5, 2, p5.getPreco()); 
 		
 		orderItemRep.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		
+		//OrderPedido op1 = new OrderPedido(null, Instant.parse("2022-06-15T19:53:07Z"),OrderStatus.PAGO, u1);//Associação entre pedido e usuário
+		Payment pay1 = new Payment(null,Instant.parse("2022-06-15T21:53:07Z"),op1);
+		
+		//Salvando o objeto
+		op1.setPayment(pay1);//Associando pagamento ao pedido e o JPA que vai salvar este pedido
+		orderRep.save(op1);
 	}
 }

@@ -64,6 +64,11 @@ public class OrderItem implements Serializable{
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
+	
+	//Implementando subtotal
+	public Double getSubtotal() {
+		return preco * quantidade;
+	}
 
 	@Override
 	public int hashCode() {
