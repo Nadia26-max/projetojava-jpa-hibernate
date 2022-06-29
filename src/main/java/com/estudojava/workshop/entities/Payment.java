@@ -3,19 +3,20 @@ package com.estudojava.workshop.entities;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_payment")
+/*@Proxy(lazy = true)*/
 public class Payment implements Serializable{
 	
 	//Classe de pagamento
@@ -28,7 +29,7 @@ public class Payment implements Serializable{
 	private Instant momento;
 	
 	@JsonIgnore
-	@OneToOne
+	@OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
 	@MapsId
 	private OrderPedido order;
 	

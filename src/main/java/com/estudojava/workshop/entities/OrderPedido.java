@@ -5,7 +5,6 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "tb_order")//O bd vai criar a tabela com este nome
+/*@Proxy(lazy = true)*/
 public class OrderPedido implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -44,7 +44,7 @@ public class OrderPedido implements Serializable{
 	@OneToMany(mappedBy = "id.order",fetch = FetchType.EAGER)
 	private Set<OrderItem> itens = new HashSet<>();//Deixar desta forma quando for uma coleção
 	
-	@OneToOne(mappedBy = "order",cascade = CascadeType.ALL)//Mapeando as duas entidades para ter o mesmo id
+	@OneToOne(mappedBy = "order",fetch=FetchType.EAGER,cascade = CascadeType.ALL)//Mapeando as duas entidades para ter o mesmo id
 	private  Payment payment;
 	
 	public OrderPedido() {	

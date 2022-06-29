@@ -2,15 +2,18 @@ package com.estudojava.workshop.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
-
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Proxy;
+
 import com.estudojava.workshop.entities.pk.OrderItemPK;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_order_item")
+@Proxy(lazy = false)
 public class OrderItem implements Serializable{
 
 	private static final long serialVersionUID = 1L;

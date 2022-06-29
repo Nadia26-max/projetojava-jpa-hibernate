@@ -11,11 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_user")//O bd vai criar a tabela com este nome
+/*@Proxy(lazy = true)*/
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -29,8 +29,9 @@ public class User implements Serializable{
 	private String senha;
 	
 	//Coleções só necessitam do get - Não haverá troca nenhuma de dados
+	
+	@OneToMany (/*mappedBy = "client",*/fetch = FetchType.EAGER/*cascade = CascadeType.ALL*/)//Está mapeado por client (nome dado à associação)
 	@JsonIgnore
-	@OneToMany(fetch=FetchType.EAGER /*mappedBy = "client"*/) //Está mapeado por client (nome dado à associação)
 	private List<OrderPedido> orderpedido = new ArrayList<>();
 	
 	public User() {

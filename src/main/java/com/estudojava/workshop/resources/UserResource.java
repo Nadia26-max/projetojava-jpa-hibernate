@@ -1,8 +1,9 @@
 package com.estudojava.workshop.resources;
 
 import java.net.URI;
-import java.net.URI;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +11,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.estudojava.workshop.entities.User;
 import com.estudojava.workshop.services.UserService;
 
@@ -53,5 +54,13 @@ public class UserResource {
 		serv.delete(id);
 		//Retornando a resposta 204
 		return ResponseEntity.noContent().build();//retorna algo vazio - noContent
+	}
+	
+	//Para atualizar
+	@PutMapping(value = "/{id}")
+	@Transactional
+	public ResponseEntity<User> atualiza(@PathVariable Long id, @RequestBody User obj){
+		obj = serv.update(id, obj);
+		return ResponseEntity.ok().body(obj);
 	}
 }

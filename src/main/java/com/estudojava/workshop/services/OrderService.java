@@ -12,7 +12,7 @@ import com.estudojava.workshop.repositories.OrderRepository;
 @Service//Permite a injeção de dependência (Classe de Serviço, então é indicado usar o service
 public class OrderService {
 
-	@Autowired(required = true)
+	@Autowired
 	private OrderRepository rep;
 	
 	//Métdo para retornar todos os dados do BD

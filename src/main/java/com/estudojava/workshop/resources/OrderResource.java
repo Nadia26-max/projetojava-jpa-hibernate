@@ -11,7 +11,7 @@ import com.estudojava.workshop.entities.OrderPedido;
 import com.estudojava.workshop.services.OrderService;
 
 @RestController
-@RequestMapping(value = "/ordempedido") // Caminho
+@RequestMapping(value = "/pedido") // Caminho
 public class OrderResource {
 
 	@Autowired // Injeção de dependência

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_category")
-@Proxy(lazy = false)
+/*@Proxy(lazy = true)*/
 public class Category implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -30,7 +31,7 @@ public class Category implements Serializable{
 	private String nome;
 	
 	@JsonIgnore
-	@ManyToMany(mappedBy = "categories",fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "categories",fetch = FetchType.EAGER)
 	@BatchSize(size = 1000)
 	private Set<Product> products = new HashSet<>();
 	
