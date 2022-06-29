@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.estudojava.workshop.entities.User;
 import com.estudojava.workshop.repositories.UserRepository;
+import com.estudojava.workshop.services.exceptions.ResourceNotFoundException;
 
 @Service//Permite a injeção de dependência (Classe de Serviço, então é indicado usar o service
 public class UserService {
@@ -21,7 +22,7 @@ public class UserService {
 	//Buscando usuário por Id
 	public User findById(Long id) {
 		Optional<User> obj = rep.findById(id);
-		return obj.get();//Retorna o objetivo que estiver no Optional
+		return obj.orElseThrow(()-> new ResourceNotFoundException(id)); //Retorna o objetivo que estiver no Optional
 	}
 	
 	//Retorna usuário salvo
