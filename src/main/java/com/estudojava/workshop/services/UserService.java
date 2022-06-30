@@ -2,6 +2,9 @@ package com.estudojava.workshop.services;
 
 import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -49,10 +52,16 @@ public class UserService {
 	}
 	
 	public User update(Long id, User obj) {
-		@SuppressWarnings("deprecation")
-		User entity = rep.getById(id);//getOne instancia um usuario mas ainda nao irá no bd(so deixa um objeto monitorado pelo jpa e em seguida, poderei efetuar alguma oporeção com o bd)
-		atualizaDado(entity,obj);
-		return rep.save(entity);
+		try {
+			@SuppressWarnings("deprecation")
+			User entity = rep.getById(id);//getOne instancia um usuario mas ainda nao irá no bd(so deixa um objeto monitorado pelo jpa e em seguida, poderei efetuar alguma oporeção com o bd)
+			atualizaDado(entity,obj);
+			return rep.save(entity);
+		}
+		catch (EntityNotFoundException e) {
+			//e.printStackTrace();
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void atualizaDado(User entity, User obj) {//Atualiza o entity com o que chegou no obj
